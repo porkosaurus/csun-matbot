@@ -28,3 +28,13 @@ strong{
   color: #D22030;
 }
 
+.translate-button{
+  margin-right: 1rem;
+  color: #D22030;
+  text-decoration: underline;
+}
+
+.read-aloud-button{
+  color: #D22030;
+  text-decoration: underline;
+}
