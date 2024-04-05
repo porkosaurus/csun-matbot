@@ -73,7 +73,7 @@ const Home = () => {
     setChats(updatedChats);
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/chatbot', {
+      const response = await fetch('https://matbot-server-368449aadfaa.herokuapp.com/chatbot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ const Home = () => {
       const language = responseContainer.querySelector('.language-dropdown').value;
   
       try {
-        const response = await fetch('http://127.0.0.1:5000/translate', {
+        const response = await fetch('https://matbot-server-368449aadfaa.herokuapp.com/translate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -181,7 +181,7 @@ const Home = () => {
       const language = responseContainer.querySelector('.language-dropdown').value;
   
       try {
-        const response = await fetch('http://127.0.0.1:5000/read_aloud', {
+        const response = await fetch('https://matbot-server-368449aadfaa.herokuapp.com/read_aloud', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -232,7 +232,7 @@ const Home = () => {
           const formData = new FormData();
           formData.append('audio', audioBlob);
   
-          const response = await fetch('http://127.0.0.1:5000/speech_to_text', {
+          const response = await fetch('https://matbot-server-368449aadfaa.herokuapp.com/speech_to_text', {
               method: 'POST',
               body: formData,
           });
