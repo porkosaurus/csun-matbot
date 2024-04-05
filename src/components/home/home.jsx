@@ -96,23 +96,46 @@ const Home = () => {
 
       const newResponse = `
       <div class="response-container" data-base-answer="${data.base_answer}">
-        <p class="mb-4 text-lg"><strong>Question:</strong> ${submittedQuestion}</p>
-        <p class="text-lg"><strong>Answer:</strong> ${data.formatted_answer}</p>
-        <div class="translation-controls">
-          <select class="language-dropdown">
-            <option value="en">English</option>
-            <option value="es">Spanish</option>
-            <option value="fr">French</option>
-            <option value="it">Italian</option>
-            <option value="ru">Russian</option>
-            <option value="zh">Mandarin</option>
-            <option value="ur">Urdu</option>
-            <option value="ar">Arabic</option>
-          </select>
-          <button class="translate-button">Translate</button>
-          <button class="read-aloud-button">Read Aloud</button>
-          </div>
+      <p class="mb-4 text-lg"><strong>Question:</strong> ${submittedQuestion}</p>
+      <p class="text-lg"><strong>Answer:</strong> ${data.formatted_answer}</p>
+      <div class="translation-controls">
+        <select class="language-dropdown">
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+          <option value="zh-CN">Chinese (Simplified)</option>
+          <option value="zh-TW">Chinese (Traditional)</option>
+          <option value="tl">Tagalog</option>
+          <option value="vi">Vietnamese</option>
+          <option value="ko">Korean</option>
+          <option value="hy">Armenian</option>
+          <option value="fa">Persian</option>
+          <option value="ru">Russian</option>
+          <option value="ar">Arabic</option>
+          <option value="ja">Japanese</option>
+          <option value="pa">Punjabi</option>
+          <option value="fr">French</option>
+          <option value="hi">Hindi</option>
+          <option value="pt">Portuguese</option>
+          <option value="km">Khmer</option>
+          <option value="hmn">Hmong</option>
+          <option value="th">Thai</option>
+          <option value="it">Italian</option>
+          <option value="de">German</option>
+          <option value="ur">Urdu</option>
+          <option value="gu">Gujarati</option>
+          <option value="he">Hebrew</option>
+          <option value="lo">Lao</option>
+          <option value="am">Amharic</option>
+          <option value="id">Indonesian</option>
+          <option value="sm">Samoan</option>
+          <option value="ta">Tamil</option>
+          <option value="te">Telugu</option>
+          <option value="bn">Bengali</option>
+        </select>
+        <button class="translate-button">Translate</button>
+        <button class="read-aloud-button">Read Aloud</button>
       </div>
+    </div>    
     `;
 
       const updatedChat = {
