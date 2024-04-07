@@ -57,102 +57,84 @@ const Home = () => {
       return lastQuestion || 'No question asked yet';
     };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (currentChatIndex === null || disabled) return;
-
-    setIsLoading(true);
-
-    const currentChat = { ...chats[currentChatIndex] };
-    const submittedQuestion = currentChat.question;
-
-    // Clear the input field immediately after submitting
-    currentChat.question = '';
-    const updatedChats = [...chats];
-    updatedChats[currentChatIndex] = currentChat;
-    setChats(updatedChats);
-
-    try {
-      const response = await fetch('https://matbot-server-368449aadfaa.herokuapp.com/chatbot', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          question: submittedQuestion,
-          context: currentChat.context,
-          model: 'model2',
-        }),
-      });
-
-      const data = await response.json();
-
-      let contextArray = currentChat.context.split('|').filter((item) => item.trim() !== '');
-      contextArray.push(`Question: ${submittedQuestion} Answer: ${data.base_answer}`);
-      if (contextArray.length > 3) {
-        contextArray.shift();
-      }
-      const newContext = contextArray.join(' | ');
-
-      const newResponse = `
-      <div class="response-container" data-base-answer="${data.base_answer}">
-      <p class="mb-4 text-lg"><strong>Question:</strong> ${submittedQuestion}</p>
-      <p class="text-lg"><strong>Answer:</strong> ${data.formatted_answer}</p>
-      <div class="translation-controls">
-        <select class="language-dropdown">
-          <option value="en">English</option>
-          <option value="es">Spanish</option>
-          <option value="zh-CN">Chinese (Simplified)</option>
-          <option value="zh-TW">Chinese (Traditional)</option>
-          <option value="tl">Tagalog</option>
-          <option value="vi">Vietnamese</option>
-          <option value="ko">Korean</option>
-          <option value="hy">Armenian</option>
-          <option value="fa">Persian</option>
-          <option value="ru">Russian</option>
-          <option value="ar">Arabic</option>
-          <option value="ja">Japanese</option>
-          <option value="pa">Punjabi</option>
-          <option value="fr">French</option>
-          <option value="hi">Hindi</option>
-          <option value="pt">Portuguese</option>
-          <option value="km">Khmer</option>
-          <option value="hmn">Hmong</option>
-          <option value="th">Thai</option>
-          <option value="it">Italian</option>
-          <option value="de">German</option>
-          <option value="ur">Urdu</option>
-          <option value="gu">Gujarati</option>
-          <option value="he">Hebrew</option>
-          <option value="lo">Lao</option>
-          <option value="am">Amharic</option>
-          <option value="id">Indonesian</option>
-          <option value="sm">Samoan</option>
-          <option value="ta">Tamil</option>
-          <option value="te">Telugu</option>
-          <option value="bn">Bengali</option>
-        </select>
-        <button class="translate-button">Translate</button>
-        <button class="read-aloud-button">Read Aloud</button>
-      </div>
-    </div>    
-    `;
-
-      const updatedChat = {
-        ...currentChat,
-        answer: data.base_answer,
-        context: newContext,
-        appendedResponses: currentChat.appendedResponses + newResponse,
-      };
-      updatedChats[currentChatIndex] = updatedChat;
+    const handleSubmit = async (e) => {
+      e.preventDefault(); // Prevent the default form submission behavior
+    
+      if (currentChatIndex === null || disabled) return; // Exit if no chat is selected or if the input is disabled
+    
+      setIsLoading(true); // Set loading state to true
+    
+      const currentChat = { ...chats[currentChatIndex] }; // Get a copy of the current chat
+      const submittedQuestion = currentChat.question; // Get the question from the current chat
+    
+      // Clear the input field immediately after submitting
+      currentChat.question = '';
+      const updatedChats = [...chats];
+      updatedChats[currentChatIndex] = currentChat;
       setChats(updatedChats);
-
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error:', error);
-      setIsLoading(false);
-    }
-  };
+    
+      try {
+        // Make a POST request to the server with the question and context
+        const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/chatbot', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            question: submittedQuestion,
+            context: currentChat.context,
+            model: 'model2', // Use the selected model (hardcoded to 'model2' here)
+          }),
+        });
+    
+        const data = await response.json(); // Parse the JSON response
+    
+        // Update the context with the new question and answer
+        let contextArray = currentChat.context.split('|').filter((item) => item.trim() !== '');
+        contextArray.push(`Question: ${submittedQuestion} Answer: ${data.base_answer}`);
+        if (contextArray.length > 3) {
+          contextArray.shift(); // Remove the oldest context if there are more than 3
+        }
+        const newContext = contextArray.join(' | ');
+    
+        // Update the chat with the new response and context
+        const newResponse = `
+        <div class="response-container" data-base-answer="${data.base_answer}">
+          <p class="mb-4 text-lg"><strong>Question:</strong> ${submittedQuestion}</p>
+          <p class="text-lg"><strong>Answer:</strong> ${data.formatted_answer}</p>
+          <div class="translation-controls">
+            <select class="language-dropdown">
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="it">Italian</option>
+              <option value="ru">Russian</option>
+              <option value="zh">Mandarin</option>
+              <option value="ur">Urdu</option>
+              <option value="ar">Arabic</option>
+            </select>
+            <button class="translate-button">Translate</button>
+            <button class="read-aloud-button">Read Aloud</button>
+            </div>
+        </div>
+      `;
+    
+        const updatedChat = {
+          ...currentChat,
+          answer: data.base_answer,
+          context: newContext,
+          appendedResponses: currentChat.appendedResponses + newResponse,
+        };
+        updatedChats[currentChatIndex] = updatedChat;
+        setChats(updatedChats); // Update the state with the modified chat
+    
+        setIsLoading(false); // Set loading state to false
+      } catch (error) {
+        console.error('Error:', error);
+        setIsLoading(false); // Set loading state to false in case of error
+      }
+    };
+    
   
   const handleInputChange = (e) => {
     const updatedChats = [...chats];
@@ -174,7 +156,7 @@ const Home = () => {
       const language = responseContainer.querySelector('.language-dropdown').value;
   
       try {
-        const response = await fetch('https://matbot-server-368449aadfaa.herokuapp.com/translate', {
+        const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/translate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -204,7 +186,7 @@ const Home = () => {
       const language = responseContainer.querySelector('.language-dropdown').value;
   
       try {
-        const response = await fetch('https://matbot-server-368449aadfaa.herokuapp.com/read_aloud', {
+        const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/read_aloud', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -255,7 +237,7 @@ const Home = () => {
           const formData = new FormData();
           formData.append('audio', audioBlob);
   
-          const response = await fetch('https://matbot-server-368449aadfaa.herokuapp.com/speech_to_text', {
+          const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/speech_to_text', {
               method: 'POST',
               body: formData,
           });
