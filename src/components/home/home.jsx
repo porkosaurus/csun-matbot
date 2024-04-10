@@ -100,8 +100,8 @@ const Home = () => {
         // Update the chat with the new response and context
         const newResponse = `
         <div class="response-container" data-base-answer="${data.base_answer}">
-          <p class="mb-4 text-lg"><strong>Question:</strong> ${submittedQuestion}</p>
-          <p class="text-lg"><strong>Answer:</strong> ${data.formatted_answer}</p>
+          <p class="mb-4 text-sm md:text-lg"><strong>Question:</strong> ${submittedQuestion}</p>
+          <p class="text-sm md:text-lg"><strong>Answer:</strong> ${data.formatted_answer}</p>
           <div class="translation-controls">
             <select class="language-dropdown">
               <option value="en">English</option>
@@ -264,10 +264,10 @@ const Home = () => {
 
   return (
     <div className='h-full w-screen flex'>
-      <div className='w-[25%] bg-[#fff] h-full flex flex-col pt-8 items-center border-r-2 border-black'>
+      <div className='w-[35%] md:w-[25%] bg-[#fff] h-full flex flex-col pt-8 items-center border-r-2 border-black'>
         <div className='w-full flex flex-col items-center'>
           <div className='flex justify-between w-full'>
-            <h3 className='text-2xl self-start ml-8 text-black font-semibold mb-8'>Chats</h3>
+            <h3 className='text-xl md:text-2xl self-start ml-2 md:ml-8 text-black font-semibold mb-4 md:mb-8'>Chats</h3>
             <FontAwesomeIcon onClick={createNewChat} icon={faPenToSquare} size="2x" color="#D22030" className='mr-12' />
           </div>
         {/* <button onClick={createNewChat} className='mt-8 mb-4 bg-black text-white pt-2 pb-2 pl-3 pr-3 rounded-lg w-[80%] border border-1 border-white'>Start A New Chat</button> */}
@@ -277,7 +277,7 @@ const Home = () => {
         {chats.map((chat, index) => (
     <div
       key={chat.id}
-      className={`pl-6 pb-4 pt-4 w-[80%] mb-1 rounded-md border-1 border-black border ${currentChatIndex === index ? 'bg-[#f2f2f2] text-black' : 'bg-white text-black'} border-solid cursor-pointer`}
+      className={`pl-6 pb-4 pt-4 w-[90%] md:w-[80%] mb-1 rounded-md border-1 border-black border ${currentChatIndex === index ? 'bg-[#f2f2f2] text-black' : 'bg-white text-black'} border-solid cursor-pointer`}
       onClick={() => switchChat(index)}
     >
       <p className='text-sm truncated-text'>{getLastQuestion(chat.appendedResponses) || "No question asked yet"}</p>
@@ -286,10 +286,10 @@ const Home = () => {
         </div>
 
       </div>
-      <div className='w-[75%] bg-[#fff] flex flex-col pb-16'>
+      <div className='w-[65%] md:w-[75%] bg-[#fff] flex flex-col pb-16'>
         <div className='border-b-2 border-black flex w-full pl-8 pt-8 pb-8 bg-[#f2f2f2]' style={{ position: 'relative' }}>
-            <img className='' src={csunlogo} alt="CSUN Logo" style={{ width: '30%' }} />
-            <h1 className='text-center text-4xl font-semibold ml-16'>MatBot</h1>
+            <img className='w-[50%] md:w-[30%]' src={csunlogo} alt="CSUN Logo" />
+            <h1 className='text-center text-lg md:text-4xl font-semibold ml-4 md:ml-16'>MatBot</h1>
         </div>
         <div className='h-[90vh]'>
         <div className='h-[60%] overflow-y-auto pt-8 mr-16 pl-16' onClick={(event) => {
@@ -304,17 +304,16 @@ const Home = () => {
 
 
         </div>
-        <div className='pl-16 flex justify-center mb-16 fixed bottom-0 w-[60%]'>
-        <form onSubmit={handleSubmit} className='w-[105%] flex'>
+        <div className='pl-4 md:pl-16 flex justify-center mb-16 fixed bottom-0 w-[60%]'>
+        <form onSubmit={handleSubmit} className='w-[80%] md:w-[105%] flex'>
           <input
-            className='bg-white pl-4 block w-[100%] rounded-md border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
+            className='bg-white pl-1 md:pl-4 block w-[100%] rounded-md border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
             type="text"
             value={currentChatIndex !== null ? chats[currentChatIndex].question : ''}
             onChange={handleInputChange}
             placeholder="Enter your question"
           />
-          <div className='bg-[#fff] rounded-lg ml-2 pl-1 w-[10%] h-[100%] flex justify-center items-center'>
-            {/* Make the icon act as a submit button */}
+          <div className='bg-[#fff] rounded-lg ml-2 md:ml-2 pl-1 w-[10%] h-[100%] flex justify-center items-center'>
             <FontAwesomeIcon
               icon={faArrowPointer}
               size="2x"
@@ -324,7 +323,7 @@ const Home = () => {
             />
           </div>
         </form>
-        <div>
+        <div className='ml-4 md:ml-0'>
         <div>
           <button onClick={isRecording ? stopRecording : startRecording}>
             {isRecording ? <FontAwesomeIcon icon={faMicrophone} size='2x' color="#D22030" className='mt-4'/> : <FontAwesomeIcon icon={faMicrophone} size='2x' color='#000' className='mt-2.5'/>}
