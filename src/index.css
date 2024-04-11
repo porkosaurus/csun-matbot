@@ -26,13 +26,15 @@ line-height: 1.75rem; /* 28px */
 }
 
 @media (max-width: 768px) {
-  .response-container {
+  .response {
     font-size: 0.875rem;
     line-height: 1.25rem;  }
 }
 
 strong{
   color: #D22030;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .translate-button{

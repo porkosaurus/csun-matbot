@@ -263,11 +263,11 @@ const Home = () => {
 
 
   return (
-    <div className='sm:h-screen h-[80vh] w-screen flex'>
+    <div className='sm:h-screen h-screen w-screen flex'>
       <div className='w-[35%] md:w-[25%] bg-[#fff] h-full flex flex-col pt-8 items-center border-r-2 border-black'>
         <div className='w-full h-auto flex flex-col items-center'>
           <div className='flex justify-between w-full'>
-            <h3 className='text-xl md:text-2xl self-start ml-2 md:ml-8 text-black font-semibold mb-4 md:mb-8'>Chats</h3>
+            <h3 className='text-xl md:text-2xl self-start mr-2 ml-2 md:ml-8 text-black font-semibold mb-12 mt-1 md:mb-8'>Chats</h3>
             <FontAwesomeIcon onClick={createNewChat} icon={faPenToSquare} size="2x" color="#D22030" className='mr-12' />
           </div>
         <input type="text" className='w-[80%] p-2 border border-2 border-black rounded-md pl-4 mb-6' placeholder='Search your chats...' />
@@ -301,7 +301,7 @@ const Home = () => {
           {isLoading && <img style={{ transform: 'scale(0.3)' }} src={loading} alt="Loading..." />}
         </div>
 
-        <div className='h-[20%] pl-4 md:pl-16 flex justify-center mb-16 fixed bottom-0 w-[60%]'>
+        <div className='h-[20%] pl-4 md:pl-16 flex justify-center items-end mb-16 fixed bottom-0 w-[60%]'>
         <form onSubmit={handleSubmit} className='h-[40%] w-[80%] md:w-[105%] flex'>
           <input
             className='bg-white pl-1 md:pl-4 block w-[100%] rounded-md border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
@@ -320,13 +320,13 @@ const Home = () => {
             /> 
           </div>
         </form>
-        <div className='ml-4 md:ml-0'>
+        <div className='mb-4 ml-4 md:ml-0'>
         <div>
           <button onClick={isRecording ? stopRecording : startRecording}>
             {isRecording ? <FontAwesomeIcon icon={faMicrophone} size='2x' color="#D22030" className='mt-4'/> : <FontAwesomeIcon icon={faMicrophone} size='2x' color='#000' className='mt-2.5'/>}
           </button>
         </div>
-    </div>
+      </div>
       </div>
 
         </div>
