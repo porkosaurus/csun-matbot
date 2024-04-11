@@ -286,10 +286,13 @@ const Home = () => {
 
       </div>
       <div className='w-[65%] md:w-[75%] bg-[#fff] flex flex-col pb-16'>
-      <div className='h-[10vh] border-b-2 border-black flex items-center w-full pl-8 pt-8 pb-8 bg-[#f2f2f2]' style={{ position: 'relative' }}>
-        <img className='h-full object-contain' src={csunlogo} alt="CSUN Logo" />
-        <h1 className='text-center text-lg md:text-4xl font-semibold ml-4 md:ml-16'>MatBot</h1>
-      </div>
+      <div className='flex items-center w-full border-b-2 border-black bg-[#f2f2f2] px-8 py-8' style={{ position: 'relative' }}>
+    <div className='flex-grow-0 flex-shrink-0 w-32 h-32 md:w-64 md:h-64 lg:w-96 lg:h-96'> {/* Adjust these values as necessary */}
+        <img src={csunlogo} alt="CSUN Logo" className='w-full h-full object-contain' />
+    </div>
+    <h1 className='text-lg md:text-4xl font-semibold ml-4 md:ml-16'>MatBot</h1>
+</div>
+
 
         <div className='pt-12 h-[90vh]'>
         <div className='h-[60%] overflow-y-auto mt-12 pr-4 pl-4' onClick={(event) => {
