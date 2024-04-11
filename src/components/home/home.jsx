@@ -262,6 +262,10 @@ const Home = () => {
   
 
 
+  const handleInputBlur = () => {
+    window.scrollTo(0, 0); // Or use a ref to scroll to a specific component
+  };
+
   return (
     <div className='sm:h-screen h-screen w-screen flex'>
       <div className='w-[35%] md:w-[25%] bg-[#fff] h-full flex flex-col pt-8 items-center border-r-2 border-black'>
@@ -314,6 +318,7 @@ const Home = () => {
             value={currentChatIndex !== null ? chats[currentChatIndex].question : ''}
             onChange={handleInputChange}
             placeholder="Enter your question"
+            onBlur={handleInputBlur}
           />
           <div className='bg-[#fff] rounded-lg ml-2 md:ml-2 pl-1 w-[10%] h-[100%] flex justify-center items-center'>
             <FontAwesomeIcon
