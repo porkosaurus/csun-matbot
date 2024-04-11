@@ -286,7 +286,7 @@ const Home = () => {
 
       </div>
       <div className='w-[65%] md:w-[75%] bg-[#fff] flex flex-col pb-16'>
-        <div className='h-[10vh] border-b-2 border-black flex w-full pl-8 pt-8 pb-8 bg-[#f2f2f2]' style={{ position: 'relative' }}>
+        <div className='h-[10vh] border-b-2 border-black flex w-full pl-8 pt-8 pb-8 bg-[#f2f2f2] aspect-w-16 aspect-h-9 w-24 md:w-32 lg:w-48' style={{ position: 'relative' }}>
             <img className='w-[50%] md:w-[30%]' src={csunlogo} alt="CSUN Logo" />
             <h1 className='text-center text-lg md:text-4xl font-semibold ml-4 md:ml-16'>MatBot</h1>
         </div>
