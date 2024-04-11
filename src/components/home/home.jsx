@@ -263,17 +263,16 @@ const Home = () => {
 
 
   return (
-    <div className='h-full w-screen flex'>
+    <div className='sm:h-screen h-[80vh] w-screen flex'>
       <div className='w-[35%] md:w-[25%] bg-[#fff] h-full flex flex-col pt-8 items-center border-r-2 border-black'>
-        <div className='w-full flex flex-col items-center'>
+        <div className='w-full h-auto flex flex-col items-center'>
           <div className='flex justify-between w-full'>
             <h3 className='text-xl md:text-2xl self-start ml-2 md:ml-8 text-black font-semibold mb-4 md:mb-8'>Chats</h3>
             <FontAwesomeIcon onClick={createNewChat} icon={faPenToSquare} size="2x" color="#D22030" className='mr-12' />
           </div>
-        {/* <button onClick={createNewChat} className='mt-8 mb-4 bg-black text-white pt-2 pb-2 pl-3 pr-3 rounded-lg w-[80%] border border-1 border-white'>Start A New Chat</button> */}
         <input type="text" className='w-[80%] p-2 border border-2 border-black rounded-md pl-4 mb-6' placeholder='Search your chats...' />
         </div>
-        <div className='flex flex-col justify-center items-center w-full'>
+        <div className='flex flex-col justify-start h-full items-center w-full'>
         {chats.map((chat, index) => (
     <div
       key={chat.id}
@@ -287,12 +286,12 @@ const Home = () => {
 
       </div>
       <div className='w-[65%] md:w-[75%] bg-[#fff] flex flex-col pb-16'>
-        <div className='border-b-2 border-black flex w-full pl-8 pt-8 pb-8 bg-[#f2f2f2]' style={{ position: 'relative' }}>
+        <div className='h-[10vh] border-b-2 border-black flex w-full pl-8 pt-8 pb-8 bg-[#f2f2f2]' style={{ position: 'relative' }}>
             <img className='w-[50%] md:w-[30%]' src={csunlogo} alt="CSUN Logo" />
             <h1 className='text-center text-lg md:text-4xl font-semibold ml-4 md:ml-16'>MatBot</h1>
         </div>
-        <div className='h-[90vh]'>
-        <div className='h-[60%] overflow-y-auto pt-8 mr-16 pl-16' onClick={(event) => {
+        <div className='pt-12 h-[90vh]'>
+        <div className='h-[60%] overflow-y-auto mt-12 pr-4 pl-4' onClick={(event) => {
           handleTranslateClick(event);
           handleReadAloudClick(event);
         }}>
@@ -302,10 +301,8 @@ const Home = () => {
           {isLoading && <img style={{ transform: 'scale(0.3)' }} src={loading} alt="Loading..." />}
         </div>
 
-
-        </div>
-        <div className='pl-4 md:pl-16 flex justify-center mb-16 fixed bottom-0 w-[60%]'>
-        <form onSubmit={handleSubmit} className='w-[80%] md:w-[105%] flex'>
+        <div className='h-[20%] pl-4 md:pl-16 flex justify-center mb-16 fixed bottom-0 w-[60%]'>
+        <form onSubmit={handleSubmit} className='h-[40%] w-[80%] md:w-[105%] flex'>
           <input
             className='bg-white pl-1 md:pl-4 block w-[100%] rounded-md border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
             type="text"
@@ -320,7 +317,7 @@ const Home = () => {
               color={disabled ? '#D3D3D3' : '#D22030'} // Change color based on disabled state
               style={{ transform: 'rotate(350deg)' }}
               onClick={!disabled ? handleSubmit : null} // Only allow click if not disabled
-            />
+            /> 
           </div>
         </form>
         <div className='ml-4 md:ml-0'>
@@ -331,6 +328,9 @@ const Home = () => {
         </div>
     </div>
       </div>
+
+        </div>
+
 
       </div>
     </div>

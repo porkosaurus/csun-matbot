@@ -4,6 +4,7 @@
 
 
 body {
+  width: 100vw;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,6 +23,12 @@ code {
   margin-bottom: 2.5rem;
   font-size: 1.125rem; /* 18px */
 line-height: 1.75rem; /* 28px */
+}
+
+@media (max-width: 768px) {
+  .response-container {
+    font-size: 0.875rem;
+    line-height: 1.25rem;  }
 }
 
 strong{
