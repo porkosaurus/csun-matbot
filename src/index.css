@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.response{
+  margin-bottom: 2.5rem;
+  font-size: 1.125rem; /* 18px */
+line-height: 1.75rem; /* 28px */
+}
+
+@media (max-width: 768px) {
+  .response {
+    font-size: 0.875rem;
+    line-height: 1.25rem;  }
+}
+
+strong{
+  color: #D22030;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.translate-button{
+  margin-right: 1rem;
+  color: #D22030;
+  text-decoration: underline;
+}
+
+.read-aloud-button{
+  color: #D22030;
+  text-decoration: underline;
+}
