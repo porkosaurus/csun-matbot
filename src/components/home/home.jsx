@@ -29,7 +29,7 @@ const Home = () => {
       const testChats = [
         {
           id: 1,
-          question: 'What is the capital of France?',
+          question: 'What services are offered at the SMART Lab?',
           answer: 'The capital of France is Paris.',
           context: '',
           appendedResponses: `
@@ -368,8 +368,8 @@ const Home = () => {
 </div>
 
 
-        <div className=' h-[90vh]'>
-          <div className='h-[70%] overflow-y-auto mt-4 pr-4 pl-4' onClick={(event) => {
+        <div className=' h-[100vh]'>
+          <div className='h-[75%] overflow-y-auto mt-4 pr-4 pl-4' onClick={(event) => {
             handleTranslateClick(event);
             handleReadAloudClick(event);
           }}>
@@ -379,7 +379,7 @@ const Home = () => {
             {isLoading && <img style={{ transform: 'scale(0.3)' }} src={loading} alt="Loading..." />}
           </div>
 
-        <div className='h-[20%] pl-4 md:pl-16 flex justify-center items-end mb-16 fixed bottom-0 w-[100%]'>
+        <div className='h-[20%] pl-4 md:pl-16 flex justify-center items-end mb-12 fixed bottom-0 w-[100%]'>
         <form onSubmit={handleSubmit} className='h-[30%] w-[80%] md:w-[105%] flex'>
           <input
             className='bg-white pl-6 md:pl-4 block w-[100%] rounded-full border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
@@ -399,7 +399,7 @@ const Home = () => {
             /> 
           </div>
         </form>
-        <div className='mb-2 ml-4 md:ml-0'>
+        <div className='ml-4 md:ml-0'>
         <div>
           <button onClick={isRecording ? stopRecording : startRecording}>
             {isRecording ? <FontAwesomeIcon icon={faMicrophone} size='2x' color="#D22030" className=''/> : <FontAwesomeIcon icon={faMicrophone} size='2x' color='#000' className='mt-2.5'/>}
