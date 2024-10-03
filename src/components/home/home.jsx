@@ -379,7 +379,7 @@ const Home = () => {
             {isLoading && <img style={{ transform: 'scale(0.3)' }} src={loading} alt="Loading..." />}
           </div>
 
-        <div className='h-[20%] pl-4 md:pl-16 flex justify-center items-end mb-12 fixed bottom-0 w-[100%]'>
+        <div className='h-[20%] pl-4 md:pl-16 flex justify-center items-end mb-4 fixed bottom-0 w-[100%]'>
         <form onSubmit={handleSubmit} className='h-[30%] w-[80%] md:w-[105%] flex'>
           <input
             className='bg-white pl-6 md:pl-4 block w-[100%] rounded-full border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
