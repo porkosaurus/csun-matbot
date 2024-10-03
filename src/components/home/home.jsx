@@ -21,6 +21,75 @@ const Home = () => {
   const audioChunksRef = useRef([]);
   const [transcribedQuestion, setTranscribedQuestion] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const [testMode, setTestMode] = useState(true);
+
+  useEffect(() => {
+    if (testMode) {
+      // Create initial test chats
+      const testChats = [
+        {
+          id: 1,
+          question: 'What is the capital of France?',
+          answer: 'The capital of France is Paris.',
+          context: '',
+          appendedResponses: `
+            <div class="response-container" data-base-answer="The capital of France is Paris.">
+              <p class="chat-bubble chat-bubble-question mb-4 text-sm md:text-lg rounded-full text-white border-black"> What services are offered at the SMART Lab?</p>
+              <div class="chat-bubble chat-bubble-answer text-sm md:text-lg">
+    <p class="chat-text">The SMART Lab at CSUN offers academic support and tutoring in various subjects, including:</p>
+    <ul class="chat-list">
+        <li class="chat-list-item">Accounting</li>
+        <li class="chat-list-item">American Sign Language (ASL)</li>
+        <li class="chat-list-item">Chemistry</li>
+        <li class="chat-list-item">Mathematics</li>
+        <li class="chat-list-item">Physics</li>
+        <li class="chat-list-item">Psychology</li>
+        <li class="chat-list-item">Economics</li>
+    </ul>
+
+    <p class="chat-text">Tutoring is available through both walk-in and appointment options, provided by undergraduate and graduate student tutors from different disciplines. The lab aims to help students master challenging course content in these areas.</p>
+
+    <p class="chat-text">Additionally, CSUN provides other academic support services such as:</p>
+    <ul class="chat-list">
+        <li class="chat-list-item">Supplemental Instruction (SI) for math and science courses</li>
+        <li class="chat-list-item">Tutoring through the Matador Achievement Center for student-athletes</li>
+        <li class="chat-list-item">Writing support through the University Writing Center.</li>
+    </ul>
+
+    <p class="chat-text">Let me know if you need any other information!</p>
+</div>
+              </p>
+            </div>
+          `,
+        },
+        {
+          id: 2,
+          question: 'Who wrote Romeo and Juliet?',
+          answer: 'Romeo and Juliet was written by William Shakespeare.',
+          context: '',
+          appendedResponses: `
+            <div class="response-container" data-base-answer="Romeo and Juliet was written by William Shakespeare.">
+              <p class="mb-4 text-sm md:text-lg"><strong>Question:</strong> Who wrote Romeo and Juliet?</p>
+              <p class="text-sm md:text-lg"><strong>Answer:</strong> Romeo and Juliet was written by William Shakespeare.</p>
+              <div class="translation-controls">
+                <select class="language-dropdown">
+                  <option value="en">English</option>
+                  <!-- ... (other language options) ... -->
+                </select>
+                <button class="translate-button">Translate</button>
+                <button class="read-aloud-button">Read Aloud</button>
+              </div>
+            </div>
+          `,
+        },
+      ];
+
+      setChats(testChats);
+      setCurrentChatIndex(0);
+    } else {
+      createNewChat();
+    }
+  });
 
   
   useEffect(() => {
@@ -268,7 +337,7 @@ const Home = () => {
 
   return (
     <div className='sm:h-screen h-screen w-screen flex'>
-      <div className='w-[35%] md:w-[25%] bg-[#fff] h-full flex flex-col pt-8 items-center border-r-2 border-black'>
+      <div className='hidden w-[0%] md:w-[0%] bg-[#fff] h-full flex flex-col pt-8 items-center border-r-2 border-black'>
         <div className='w-full h-auto flex flex-col items-center'>
           <div className='flex justify-between w-full'>
             <h3 className='text-xl md:text-2xl self-start mr-2 ml-2 md:ml-8 text-black font-semibold mb-12 mt-1 md:mb-8'>Chats</h3>
@@ -289,7 +358,7 @@ const Home = () => {
         </div>
 
       </div>
-      <div className='w-[65%] md:w-[75%] bg-[#fff] flex flex-col pb-16'>
+      <div className='w-[100%] md:w-[100%] bg-[#fff] flex flex-col pb-16'>
       <div className='flex items-center w-full border-b-2 border-black bg-[#f2f2f2] px-8 py-8' style={{ position: 'relative' }}>
       <div className='w-full max-w-xs'> {/* Adjust max-w- value as needed */}
   <img src={csunlogo} alt="CSUN Logo" className='h-auto max-h-20 md:max-h-32 lg:max-h-40 w-auto object-contain' />
@@ -299,21 +368,21 @@ const Home = () => {
 </div>
 
 
-        <div className='pt-12 h-[90vh]'>
-        <div className='h-[60%] overflow-y-auto mt-12 pr-4 pl-4' onClick={(event) => {
-          handleTranslateClick(event);
-          handleReadAloudClick(event);
-        }}>
-          {currentChatIndex !== null && (
-            <div dangerouslySetInnerHTML={{ __html: chats[currentChatIndex].appendedResponses }} />
-          )}
-          {isLoading && <img style={{ transform: 'scale(0.3)' }} src={loading} alt="Loading..." />}
-        </div>
+        <div className=' h-[90vh]'>
+          <div className='h-[70%] overflow-y-auto mt-4 pr-4 pl-4' onClick={(event) => {
+            handleTranslateClick(event);
+            handleReadAloudClick(event);
+          }}>
+            {currentChatIndex !== null && chats[currentChatIndex] && (
+              <div dangerouslySetInnerHTML={{ __html: chats[currentChatIndex].appendedResponses }} />
+            )}
+            {isLoading && <img style={{ transform: 'scale(0.3)' }} src={loading} alt="Loading..." />}
+          </div>
 
-        <div className='h-[20%] pl-4 md:pl-16 flex justify-center items-end mb-16 fixed bottom-0 w-[60%]'>
-        <form onSubmit={handleSubmit} className='h-[40%] w-[80%] md:w-[105%] flex'>
+        <div className='h-[20%] pl-4 md:pl-16 flex justify-center items-end mb-16 fixed bottom-0 w-[100%]'>
+        <form onSubmit={handleSubmit} className='h-[30%] w-[80%] md:w-[105%] flex'>
           <input
-            className='bg-white pl-1 md:pl-4 block w-[100%] rounded-md border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
+            className='bg-white pl-6 md:pl-4 block w-[100%] rounded-full border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
             type="text"
             value={currentChatIndex !== null ? chats[currentChatIndex].question : ''}
             onChange={handleInputChange}
@@ -330,10 +399,10 @@ const Home = () => {
             /> 
           </div>
         </form>
-        <div className='mb-4 ml-4 md:ml-0'>
+        <div className='mb-2 ml-4 md:ml-0'>
         <div>
           <button onClick={isRecording ? stopRecording : startRecording}>
-            {isRecording ? <FontAwesomeIcon icon={faMicrophone} size='2x' color="#D22030" className='mt-4'/> : <FontAwesomeIcon icon={faMicrophone} size='2x' color='#000' className='mt-2.5'/>}
+            {isRecording ? <FontAwesomeIcon icon={faMicrophone} size='2x' color="#D22030" className=''/> : <FontAwesomeIcon icon={faMicrophone} size='2x' color='#000' className='mt-2.5'/>}
           </button>
         </div>
       </div>

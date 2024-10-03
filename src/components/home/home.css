@@ -12,3 +12,47 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.response-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+}
+
+.chat-bubble-question {
+  align-self: flex-end;
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.chat-bubble-answer {
+  align-self: flex-start;
+  background-color: #D22030;
+  color: #fff;
+}
+
+.chat-text {
+  font-size: 1rem; /* Base font size */
+  line-height: 1.5; /* Line height for better readability */
+  margin: 5px 0; /* Margin for spacing between paragraphs */
+  color: #fff;
+}
+
+.chat-list {
+  list-style-type: disc; /* Bulleted list */
+  margin-left: 20px; /* Indent for lists */
+  padding: 0; /* Remove padding */
+}
+
+.chat-list-item {
+  font-size: 1rem; /* Base font size for list items */
+  color: #fff; 
+  margin: 5px 0; /* Margin for spacing between list items */
+}
