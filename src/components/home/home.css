@@ -30,6 +30,8 @@
   align-self: flex-end;
   background-color: #f0f0f0;
   color: #000;
+  font-size: 1rem; /* Base font size */
+  line-height: 1.5; /* Line height for better readability */
 }
 
 .chat-bubble-answer {
