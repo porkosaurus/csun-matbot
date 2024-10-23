@@ -1,105 +1,180 @@
-import React, { useState, useRef, useEffect } from 'react';
-import '../../App.css'
-import csunlogo from '../../images/2560px-CSU_Northridge_logo.svg.png'
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowPointer, faM } from '@fortawesome/free-solid-svg-icons';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { faMicrophone } from '@fortawesome/free-solid-svg-icons';
-import './home.css'
-import loading from '../../images/writing-loading.gif'
+import { faArrowPointer, faBars, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import matbot from '../../images/matbot-logo.png';
+import loading from '../../images/writing-loading.gif';
 
 const Home = () => {
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [chats, setChats] = useState([]);
   const [currentChatIndex, setCurrentChatIndex] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('model1');
-  const [isRecording, setIsRecording] = useState(false);
-  const [transcription, setTranscription] = useState('');
-  const mediaRecorderRef = useRef(null);
-  const audioChunksRef = useRef([]);
-  const [transcribedQuestion, setTranscribedQuestion] = useState('');
   const [disabled, setDisabled] = useState(true);
-  const [testMode, setTestMode] = useState(true);
+  const [submissionCount, setSubmissionCount] = useState(0);
+  const [marginTop, setMarginTop] = useState('2rem');
+  const chatContainerRef = useRef(null);
 
-  useEffect(() => {
-    if (testMode) {
-      // Create initial test chats
-      const testChats = [
-        {
-          id: 1,
-          question: 'What services are offered at the SMART Lab?',
-          answer: 'The capital of France is Paris.',
-          context: '',
-          appendedResponses: `
-            <div class="response-container" data-base-answer="The capital of France is Paris.">
-              <p class="chat-bubble chat-bubble-question mb-4 text-sm md:text-lg rounded-full text-white border-black"> What services are offered at the SMART Lab?</p>
-              <div class="chat-bubble chat-bubble-answer text-sm md:text-lg">
-    <p class="chat-text">The SMART Lab at CSUN offers academic support and tutoring in various subjects, including:</p>
-    <ul class="chat-list">
-        <li class="chat-list-item">Accounting</li>
-        <li class="chat-list-item">American Sign Language (ASL)</li>
-        <li class="chat-list-item">Chemistry</li>
-        <li class="chat-list-item">Mathematics</li>
-        <li class="chat-list-item">Physics</li>
-        <li class="chat-list-item">Psychology</li>
-        <li class="chat-list-item">Economics</li>
-    </ul>
 
-    <p class="chat-text">Tutoring is available through both walk-in and appointment options, provided by undergraduate and graduate student tutors from different disciplines. The lab aims to help students master challenging course content in these areas.</p>
+  const suggestions = [
+    "Where can I find a place to study?",
+    "How to register for my classes",
+    "What events are happening on campus"
+  ];
 
-    <p class="chat-text">Additionally, CSUN provides other academic support services such as:</p>
-    <ul class="chat-list">
-        <li class="chat-list-item">Supplemental Instruction (SI) for math and science courses</li>
-        <li class="chat-list-item">Tutoring through the Matador Achievement Center for student-athletes</li>
-        <li class="chat-list-item">Writing support through the University Writing Center.</li>
-    </ul>
+  const predefinedResponses = [
+    {
+        title: "SMART Lab Services",
+        content: `
+            <p>The SMART Lab at CSUN offers academic support and tutoring in the following subjects:</p>
+            <ul>
+                <li>Accounting</li>
+                <li>American Sign Language (ASL)</li>
+                <li>Chemistry</li>
+                <li>Mathematics</li>
+                <li>Physics</li>
+                <li>Psychology</li>
+                <li>Economics</li>
+            </ul>
+            <p>The SMART Lab provides both walk-in and appointment-based tutoring services, with tutors who are undergraduate and graduate students from various university disciplines.</p>
+            <p>The lab offers:</p>
+            <ul>
+                <li>Supplemental Instruction (SI) for Math and Science courses with junior, senior, and graduate student leaders</li>
+                <li>Group study sessions focused on understanding material and developing study strategies</li>
+                <li>Support for note-taking and problem-solving skills</li>
+                <li>Exam preparation assistance</li>
+                <li>Matador Achievement Center free tutoring for all current student-athletes</li>
+                <li>University Writing Center support with peer writing specialists and faculty writing consultants</li>
+            </ul>`
+    },
+    {
+        title: "Healthcare Services",
+        content: `
+            <h3>Klotz Student Health Center</h3>
+            <ul>
+                <li>Primary and specialty care services including:
+                    <ul>
+                        <li>Acupuncture</li>
+                        <li>Chiropractic care</li>
+                        <li>Nutrition counseling</li>
+                        <li>Optometry</li>
+                        <li>Physical therapy</li>
+                        <li>Sexual/reproductive health</li>
+                        <li>Sports medicine</li>
+                    </ul>
+                </li>
+                <li>Staffed by physicians, nurse practitioners, and health educators</li>
+                <li>Appointments: 818-677-3666, option 1</li>
+                <li>After-hours care information available</li>
+            </ul>
 
-    <p class="chat-text">Let me know if you need any other information!</p>
-</div>
-              </p>
-            </div>
-          `,
-        },
-        {
-          id: 2,
-          question: 'Who wrote Romeo and Juliet?',
-          answer: 'Romeo and Juliet was written by William Shakespeare.',
-          context: '',
-          appendedResponses: `
-            <div class="response-container" data-base-answer="Romeo and Juliet was written by William Shakespeare.">
-              <p class="mb-4 text-sm md:text-lg"><strong>Question:</strong> Who wrote Romeo and Juliet?</p>
-              <p class="text-sm md:text-lg"><strong>Answer:</strong> Romeo and Juliet was written by William Shakespeare.</p>
-              <div class="translation-controls">
-                <select class="language-dropdown">
-                  <option value="en">English</option>
-                  <!-- ... (other language options) ... -->
-                </select>
-                <button class="translate-button">Translate</button>
-                <button class="read-aloud-button">Read Aloud</button>
-              </div>
-            </div>
-          `,
-        },
-      ];
+            <h3>University Counseling Services (UCS)</h3>
+            <ul>
+                <li>Free mental health services including:
+                    <ul>
+                        <li>Initial evaluations</li>
+                        <li>Short-term counseling</li>
+                        <li>Wellness workshops</li>
+                        <li>Group treatment</li>
+                        <li>Psychiatric services</li>
+                        <li>Crisis/urgent care</li>
+                    </ul>
+                </li>
+                <li>Confidential and accessible services including ASL support</li>
+            </ul>
 
-      setChats(testChats);
-      setCurrentChatIndex(0);
-    } else {
-      createNewChat();
+            <h3>Oasis Wellness Center</h3>
+            <ul>
+                <li>Located in the University Student Union (USU)</li>
+                <li>Amenities include:
+                    <ul>
+                        <li>Nap pods</li>
+                        <li>Massage/relaxation chairs</li>
+                        <li>Guided meditation</li>
+                        <li>Wellness classes/workshops</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Additional Resources</h3>
+            <ul>
+                <li>Institute for Community Health and Wellbeing (HWB)</li>
+                <li>YOU@CSUN online well-being platform</li>
+            </ul>`
+    },
+    {
+        title: "Gender-Inclusive Bathrooms",
+        content: `
+            <h3>University Student Union Locations</h3>
+            <ul>
+                <li>Sol Center (2nd floor) - 2 restrooms</li>
+                <li>East Conference Center (1st and 2nd floors)</li>
+            </ul>
+
+            <h3>Campus Building Locations</h3>
+            <ul>
+                <li>Arbor Court (1st floor)</li>
+                <li>Brown Center (1st floor)</li>
+                <li>Chaparral Hall (2nd floor)</li>
+                <li>Cypress Hall (1st and 2nd floors)</li>
+                <li>Education Building (2nd floor)</li>
+                <li>Eucalyptus Hall (basement)</li>
+                <li>Extended University Commons (1st, 2nd, and 3rd floors)</li>
+                <li>Intercollegiate Athletics Office (1st floor)</li>
+                <li>Laurel Hall (1st floor)</li>
+                <li>Maple Hall (1st, 2nd, and 3rd floors)</li>
+                <li>Monterey Hall (1st, 2nd, and 3rd floors)</li>
+                <li>Oasis Wellness Center (basement)</li>
+                <li>University Library (1st floor)</li>
+                <li>Santa Susana Hall (1st floor)</li>
+                <li>Sierra Hall (1st floor)</li>
+                <li>Sierra Tower (8th floor)</li>
+                <li>Student Health Center (2nd floor)</li>
+                <li>Sustainability Center/AS Recycling (1st floor)</li>
+                <li>The Soraya (1st floor)</li>
+            </ul>
+            <p>For more information, contact the LGBTQ Advisory Board at lgbtqadvisory@csun.edu</p>`
+    },
+    {
+        title: "Course Recommendations",
+        content: `
+            <h3>First Year Economics Major Schedule Example</h3>
+            <p>Monday/Wednesday:</p>
+            <ul>
+                <li>MATH 103 Mathematical Methods for Business - 11:30am-12:45pm</li>
+                <li>POLS 155 American Political Institutions - 10:00am-11:15am</li>
+            </ul>
+            <p>Tuesday/Thursday:</p>
+            <ul>
+                <li>ECON 160 Principles of Microeconomics - 11:30am-12:45pm</li>
+                <li>ANTH 151 Introduction to Biological Anthropology - 1:00pm-2:15pm</li>
+            </ul>
+
+            <h3>Music and Film Interest Courses</h3>
+            <ul>
+                <li>MUS 105 Understanding Music - Overview of Western music traditions</li>
+                <li>MUS 107 Music Today - Survey of various music genres including rock, jazz, and pop</li>
+                <li>CTVA 210 Television-Film Aesthetics - Analysis of TV and film as communicative art forms</li>
+                <li>CTVA 215 Cult Film and Television - Study of cult films and TV shows</li>
+            </ul>
+
+            <h3>Additional Recommended Courses</h3>
+            <ul>
+                <li>PHIL 165 Ethics for the 21st Century</li>
+                <li>PHIL 180 Human Nature and the Meaning of Life</li>
+                <li>ENGL 113B Approaches to University Writing B</li>
+            </ul>`
     }
-  });
+];
 
-  
   useEffect(() => {
-    createNewChat(); // Automatically create a new chat when the component mounts
+    createNewChat();
   }, []);
 
-  const switchChat = (chatIndex) => {
-    setCurrentChatIndex(chatIndex);
-  };
-  
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [chats, isLoading]);
 
   const createNewChat = () => {
     const newChat = {
@@ -107,43 +182,64 @@ const Home = () => {
       question: '',
       answer: '',
       context: '',
-      appendedResponses: '', // Add this property
+      appendedResponses: '',
     };
     setChats([...chats, newChat]);
     setCurrentChatIndex(chats.length);
+    setInputValue('');
   };
 
-      // Add this function above your Home component
-    const getLastQuestion = (appendedResponses) => {
-      const questionRegex = /<strong>Question:<\/strong> (.*?)<\/p>/g;
-      let lastQuestion = '';
-      let match;
+  const switchChat = (chatIndex) => {
+    setCurrentChatIndex(chatIndex);
+    setInputValue('');
+  };
 
-      while ((match = questionRegex.exec(appendedResponses)) !== null) {
-        lastQuestion = match[1]; // Extract the question text
-      }
+  const getLastQuestion = (appendedResponses) => {
+    const questionRegex = /<p class="chat-bubble chat-bubble-question.*?">(.*?)<\/p>/;
+    const match = appendedResponses.match(questionRegex);
+    return match ? match[1] : 'No question asked yet';
+  };
 
-      return lastQuestion || 'No question asked yet';
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (currentChatIndex === null || disabled) return;
 
-    const handleSubmit = async (e) => {
-      e.preventDefault(); // Prevent the default form submission behavior
-    
-      if (currentChatIndex === null || disabled) return; // Exit if no chat is selected or if the input is disabled
-    
-      setIsLoading(true); // Set loading state to true
-    
-      const currentChat = { ...chats[currentChatIndex] }; // Get a copy of the current chat
-      const submittedQuestion = currentChat.question; // Get the question from the current chat
-    
-      // Clear the input field immediately after submitting
-      currentChat.question = '';
+    setIsLoading(true);
+    setMarginTop('0.5rem');
+
+    const submittedQuestion = inputValue;
+    setInputValue('');
+    setDisabled(true);
+
+    // Handle predefined responses
+    if (submissionCount < predefinedResponses.length) {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      const response = predefinedResponses[submissionCount];
+      
+      const newResponse = `
+        <div class="response-container">
+          <p class="chat-bubble chat-bubble-question mb-4 text-sm md:text-lg rounded-full text-white border-black">${submittedQuestion}</p>
+          <div class="chat-bubble chat-bubble-answer text-sm md:text-lg">
+            <h2 class="font-bold mb-4">${response.title}</h2>
+            ${response.content}
+          </div>
+        </div>
+      `;
+
+      const updatedChat = {
+        ...chats[currentChatIndex],
+        question: '',
+        answer: response.content,
+        appendedResponses: (chats[currentChatIndex].appendedResponses || '') + newResponse,
+      };
+
       const updatedChats = [...chats];
-      updatedChats[currentChatIndex] = currentChat;
+      updatedChats[currentChatIndex] = updatedChat;
       setChats(updatedChats);
-    
+      setSubmissionCount(prevCount => prevCount + 1);
+    } else {
       try {
-        // Make a POST request to the server with the question and context
         const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/chatbot', {
           method: 'POST',
           headers: {
@@ -151,269 +247,208 @@ const Home = () => {
           },
           body: JSON.stringify({
             question: submittedQuestion,
-            context: currentChat.context,
-            model: 'model2', // Use the selected model (hardcoded to 'model2' here)
+            context: chats[currentChatIndex].context,
+            model: 'model2',
           }),
         });
-    
-        const data = await response.json(); // Parse the JSON response
-    
-        // Update the context with the new question and answer
-        let contextArray = currentChat.context.split('|').filter((item) => item.trim() !== '');
-        contextArray.push(`Question: ${submittedQuestion} Answer: ${data.base_answer}`);
-        if (contextArray.length > 3) {
-          contextArray.shift(); // Remove the oldest context if there are more than 3
-        }
-        const newContext = contextArray.join(' | ');
-    
-        // Update the chat with the new response and context
-        const newResponse = `
-        <div class="response-container" data-base-answer="${data.base_answer}">
-          <p class="mb-4 text-sm md:text-lg"><strong>Question:</strong> ${submittedQuestion}</p>
-          <p class="text-sm md:text-lg"><strong>Answer:</strong> ${data.formatted_answer}</p>
-          <div class="translation-controls">
-            <select class="language-dropdown">
-              <option value="en">English</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-              <option value="it">Italian</option>
-              <option value="ru">Russian</option>
-              <option value="zh">Mandarin</option>
-              <option value="ur">Urdu</option>
-              <option value="ar">Arabic</option>
-            </select>
-            <button class="translate-button">Translate</button>
-            <button class="read-aloud-button">Read Aloud</button>
-            </div>
-        </div>
-      `;
-    
-        const updatedChat = {
-          ...currentChat,
-          answer: data.base_answer,
-          context: newContext,
-          appendedResponses: currentChat.appendedResponses + newResponse,
-        };
-        updatedChats[currentChatIndex] = updatedChat;
-        setChats(updatedChats); // Update the state with the modified chat
-    
-        setIsLoading(false); // Set loading state to false
-      } catch (error) {
-        console.error('Error:', error);
-        setIsLoading(false); // Set loading state to false in case of error
-      }
-    };
-    
-  
-  const handleInputChange = (e) => {
-    const updatedChats = [...chats];
-    updatedChats[currentChatIndex] = { ...chats[currentChatIndex], question: e.target.value };
-    setChats(updatedChats);
-    setDisabled(e.target.value.trim() === ''); // Update disabled state based on input value
-  };
-  
 
-  const getBaseAnswer = (responseElement) => {
-    return responseElement.getAttribute('data-base-answer');
-  };
-  
-  const handleTranslateClick = async (event) => {
-    if (event.target.classList.contains('translate-button')) {
-      const buttonElement = event.target;
-      const responseContainer = buttonElement.closest('.response-container');
-      const baseAnswer = responseContainer.getAttribute('data-base-answer');
-      const language = responseContainer.querySelector('.language-dropdown').value;
-  
-      try {
-        const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/translate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            text: baseAnswer,
-            target_language: language,
-          }),
-        });
-  
-        const data = await response.json();
-        responseContainer.setAttribute('data-base-answer', data.translated_text); // Update the data-base-answer attribute
-        const answerElement = responseContainer.querySelector('.response');
-        answerElement.innerHTML = `${data.translated_text}`;
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
-  };
-  
-  
-  const handleReadAloudClick = async (event) => {
-    if (event.target.classList.contains('read-aloud-button')) {
-      const buttonElement = event.target;
-      const responseContainer = buttonElement.closest('.response-container');
-      const text = responseContainer.getAttribute('data-base-answer');
-      const language = responseContainer.querySelector('.language-dropdown').value;
-  
-      try {
-        const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/read_aloud', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            text: text,
-            language: language,
-          }),
-        });
-  
-        const blob = await response.blob();
-        const audioUrl = URL.createObjectURL(blob);
-        const audio = new Audio(audioUrl);
-        audio.play();
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
-  };
-  
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorderRef.current = new MediaRecorder(stream);
-      mediaRecorderRef.current.start();
-
-      mediaRecorderRef.current.ondataavailable = (event) => {
-        audioChunksRef.current.push(event.data);
-      };
-
-      setIsRecording(true);
-    } catch (error) {
-      console.error('Error starting recording:', error);
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop(); // Stop the MediaRecorder
-      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop()); // Stop the media stream
-      setIsRecording(false);
-  
-      mediaRecorderRef.current.onstop = async () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-        audioChunksRef.current = [];
-  
-        try {
-          const formData = new FormData();
-          formData.append('audio', audioBlob);
-  
-          const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/speech_to_text', {
-              method: 'POST',
-              body: formData,
-          });
-  
+        if (response.ok) {
           const data = await response.json();
-          const transcription = data.transcriptions.join(' '); // Get the transcription
-          console.log("Transcription:", transcription);
-  
-          // Set the question of the current chat to the transcribed text
-          if (currentChatIndex !== null) {
-            const updatedChats = [...chats];
-            updatedChats[currentChatIndex].question = transcription;
-            setChats(updatedChats);
-          }
-  
-        } catch (error) {
-          console.error('Error sending audio to server:', error);
+          // Handle API response similarly to predefined responses
+          const newResponse = `
+            <div class="response-container">
+              <p class="chat-bubble chat-bubble-question mb-4 text-sm md:text-lg rounded-full text-white border-black">${submittedQuestion}</p>
+              <div class="chat-bubble chat-bubble-answer text-sm md:text-lg">${data.answer}</div>
+            </div>
+          `;
+
+          const updatedChat = {
+            ...chats[currentChatIndex],
+            question: '',
+            answer: data.answer,
+            appendedResponses: (chats[currentChatIndex].appendedResponses || '') + newResponse,
+          };
+
+          const updatedChats = [...chats];
+          updatedChats[currentChatIndex] = updatedChat;
+          setChats(updatedChats);
         }
-      };
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
+    
+    setIsLoading(false);
   };
-  
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setDisabled(value.trim() === '');
+  };
 
-  const handleInputBlur = () => {
-    window.scrollTo(0, 0); // Or use a ref to scroll to a specific component
+  const renderChatContent = () => {
+    if (currentChatIndex !== null && chats[currentChatIndex] && chats[currentChatIndex].appendedResponses) {
+      return (
+        <div className="transition-all duration-300" style={{ marginTop }}>
+          <div dangerouslySetInnerHTML={{ __html: chats[currentChatIndex].appendedResponses }} />
+          {isLoading && (
+            <div className="flex justify-center items-center mt-4">
+              <img 
+                src={loading} 
+                alt="Loading..." 
+                className="transform scale-30"
+                style={{ transform: 'scale(0.3)' }}
+              />
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    return (
+      <div className="h-full flex flex-col justify-center items-center">
+        <img 
+          src={matbot} 
+          alt="MatBot Logo" 
+          className="w-48 h-48 md:w-64 md:h-64 object-contain"
+        />
+        <div className="w-full flex flex-col items-center mt-8">
+          {suggestions.map((suggestion, index) => (
+            <div
+              key={suggestion}
+              className="w-[65%] p-4 mb-4 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-all duration-300"
+              style={{
+                opacity: 0,
+                animation: `fadeIn 0.5s ease-out ${index * 0.2}s forwards`
+              }}
+              onClick={() => {
+                setInputValue(suggestion);
+                setDisabled(false);
+              }}
+            >
+              <p className="text-gray-600 text-center">{suggestion}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div className='sm:h-screen h-screen w-screen flex'>
-      <div className='hidden w-[0%] md:w-[0%] bg-[#fff] h-full flex flex-col pt-8 items-center border-r-2 border-black'>
-        <div className='w-full h-auto flex flex-col items-center'>
-          <div className='flex justify-between w-full'>
-            <h3 className='text-xl md:text-2xl self-start mr-2 ml-2 md:ml-8 text-black font-semibold mb-12 mt-1 md:mb-8'>Chats</h3>
-            <FontAwesomeIcon onClick={createNewChat} icon={faPenToSquare} size="2x" color="#D22030" className='mr-12' />
-          </div>
-        <input type="text" className='w-[80%] p-2 border border-2 border-black rounded-md pl-4 mb-6' placeholder='Search your chats...' />
-        </div>
-        <div className='flex flex-col justify-start h-full items-center w-full'>
-        {chats.map((chat, index) => (
-    <div
-      key={chat.id}
-      className={`pl-6 pb-4 pt-4 w-[90%] md:w-[80%] mb-1 rounded-md border-1 border-black border ${currentChatIndex === index ? 'bg-[#f2f2f2] text-black' : 'bg-white text-black'} border-solid cursor-pointer`}
-      onClick={() => switchChat(index)}
-    >
-      <p className='text-sm truncated-text'>{getLastQuestion(chat.appendedResponses) || "No question asked yet"}</p>
-    </div>
-  ))}
-        </div>
+    <div className="h-screen flex flex-col overflow-hidden">
+      <style>
+        {`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .chat-bubble-question {
+            background-color: #D22030;
+            padding: 1rem;
+            margin-bottom: 1rem;
+          }
+          .chat-bubble-answer {
+            background-color: #f2f2f2;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+          }
+          .chat-bubble-answer ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            list-style-type: disc;
+          }
+          .chat-bubble-answer li {
+            margin-bottom: 0.5rem;
+          }
+          .chat-bubble-answer h3 {
+            font-weight: bold;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+          }
+        `}
+      </style>
 
+      {/* Header - Fixed height */}
+      <div className="flex items-center border-b-2 border-black bg-[#f2f2f2] px-8 py-8">
+        <div className="w-full max-w-xs">
+          <FontAwesomeIcon size="2x" icon={faBars} color="#D22030"/>
+        </div>
+        <h1 className="text-lg md:text-4xl font-semibold ml-4 md:ml-16 text-[#d22030]">MatBot</h1>
       </div>
-      <div className='w-[100%] md:w-[100%] bg-[#fff] flex flex-col pb-16'>
-      <div className='flex items-center w-full border-b-2 border-black bg-[#f2f2f2] px-8 py-8' style={{ position: 'relative' }}>
-      <div className='w-full max-w-xs'> {/* Adjust max-w- value as needed */}
-  <img src={csunlogo} alt="CSUN Logo" className='h-auto max-h-20 md:max-h-32 lg:max-h-40 w-auto object-contain' />
-</div>
 
-    <h1 className='text-lg md:text-4xl font-semibold ml-4 md:ml-16'>MatBot</h1>
-</div>
-
-
-        <div className=' h-[100vh]'>
-          <div className='h-[80%] overflow-y-auto mt-4 pr-4 pl-4' onClick={(event) => {
-            handleTranslateClick(event);
-            handleReadAloudClick(event);
-          }}>
-            {currentChatIndex !== null && chats[currentChatIndex] && (
-              <div dangerouslySetInnerHTML={{ __html: chats[currentChatIndex].appendedResponses }} />
+      {/* Chat container - Flexible height */}
+      <div 
+        ref={chatContainerRef}
+        className="flex-1 overflow-y-auto px-4 pb-24"
+      >
+        {currentChatIndex !== null && chats[currentChatIndex] && chats[currentChatIndex].appendedResponses ? (
+          <div className="transition-all duration-300" style={{ marginTop }}>
+            <div dangerouslySetInnerHTML={{ __html: chats[currentChatIndex].appendedResponses }} />
+            {isLoading && (
+              <div className="flex justify-center items-center mt-4">
+                <img 
+                  src={loading} 
+                  alt="Loading..." 
+                  className="transform scale-30"
+                  style={{ transform: 'scale(0.3)' }}
+                />
+              </div>
             )}
-            {isLoading && <img style={{ transform: 'scale(0.3)' }} src={loading} alt="Loading..." />}
           </div>
+        ) : (
+          <div className="h-full flex flex-col justify-center items-center">
+            <img 
+              src={matbot} 
+              alt="MatBot Logo" 
+              className="w-48 h-48 md:w-64 md:h-64 object-contain"
+            />
+            <div className="w-full flex flex-col items-center mt-8">
+              {suggestions.map((suggestion, index) => (
+                <div
+                  key={suggestion}
+                  className="w-[65%] p-4 mb-4 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-all duration-300"
+                  style={{
+                    opacity: 0,
+                    animation: `fadeIn 0.5s ease-out ${index * 0.2}s forwards`
+                  }}
+                  onClick={() => {
+                    setInputValue(suggestion);
+                    setDisabled(false);
+                  }}
+                >
+                  <p className="text-gray-600 text-center">{suggestion}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
 
-        <div className='h-[20%] pl-4 md:pl-16 flex justify-center items-end mb-6 fixed bottom-0 w-[100%]'>
-        <form onSubmit={handleSubmit} className='h-[30%] w-[80%] md:w-[105%] flex'>
+      {/* Input container - Fixed at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 bg-white p-4">
+        <form onSubmit={handleSubmit} className="flex max-w-5xl mx-auto">
           <input
-            className='bg-white pl-6 md:pl-4 block w-[100%] rounded-full border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6'
+            className="flex-1 bg-white pl-6 md:pl-4 rounded-full border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
             type="text"
-            value={currentChatIndex !== null ? chats[currentChatIndex].question : ''}
+            value={inputValue}
             onChange={handleInputChange}
             placeholder="Enter your question"
-            onBlur={handleInputBlur}
           />
-          <div className='bg-[#fff] rounded-lg ml-2 md:ml-2 pl-1 w-[10%] h-[100%] flex justify-center items-center'>
+          <div className="ml-2 w-12 flex items-center justify-center">
             <FontAwesomeIcon
               icon={faArrowPointer}
               size="2x"
-              color={disabled ? '#D3D3D3' : '#D22030'} // Change color based on disabled state
-              style={{ transform: 'rotate(350deg)' }}
-              onClick={!disabled ? handleSubmit : null} // Only allow click if not disabled
-            /> 
+              color={disabled ? '#D3D3D3' : '#D22030'}
+              style={{ transform: 'rotate(350deg)', cursor: disabled ? 'default' : 'pointer' }}
+              onClick={!disabled ? handleSubmit : undefined}
+            />
           </div>
         </form>
-        <div className='ml-4 md:ml-0'>
-        <div>
-          <button onClick={isRecording ? stopRecording : startRecording}>
-            {isRecording ? <FontAwesomeIcon icon={faMicrophone} size='2x' color="#D22030" className=''/> : <FontAwesomeIcon icon={faMicrophone} size='2x' color='#000' className='mt-2.5'/>}
-          </button>
-        </div>
-      </div>
-      </div>
-
-        </div>
-
-
       </div>
     </div>
   );
-;
-}
+};
+
 export default Home;
