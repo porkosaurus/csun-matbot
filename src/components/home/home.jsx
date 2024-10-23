@@ -384,8 +384,17 @@ const Home = () => {
       {/* Chat container - Flexible height and scrolling */}
       <div 
         ref={chatContainerRef}
-        className="flex-1 overflow-y-auto px-4 pb-24"
+        className="flex-1 overflow-y-auto px-4 pb-24 flex flex-col justify-start items-center" // Ensure flex column for vertical alignment
       >
+        <div className="mt-4 mb-8"> {/* Add margin to push logo down */}
+          <img 
+            src={matbot} 
+            alt="MatBot Logo" 
+            className="w-32 h-32 md:w-64 md:h-64 object-contain"
+          />
+        </div>
+  
+        {/* Only show this section if currentChatIndex is valid */}
         {currentChatIndex !== null && chats[currentChatIndex] && chats[currentChatIndex].appendedResponses ? (
           <div className="transition-all duration-300 pt-4" style={{ marginTop }}>
             <div dangerouslySetInnerHTML={{ __html: chats[currentChatIndex].appendedResponses }} />
@@ -401,12 +410,7 @@ const Home = () => {
             )}
           </div>
         ) : (
-          <div className="min-h-0 h-full flex flex-col justify-start md:justify-center items-center pt-8 md:pt-0">
-            <img 
-              src={matbot} 
-              alt="MatBot Logo" 
-              className="w-32 h-32 md:w-64 md:h-64 object-contain mb-8"
-            />
+          <div className="min-h-0 h-full flex flex-col justify-start items-center pt-4">
             <div className="w-full flex flex-col items-center space-y-4 pb-20 md:pb-0">
               {suggestions.map((suggestion, index) => (
                 <div
@@ -452,6 +456,7 @@ const Home = () => {
       </div>
     </div>
   );
+  
   
 };
 
