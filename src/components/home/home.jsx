@@ -370,12 +370,12 @@ const Home = () => {
         `}
       </style>
   
-      {/* Header - Fixed height */}
-      <div className="flex items-center border-b-2 border-black bg-[#f2f2f2] px-4 md:px-8 py-4 md:py-8">
-        <div className="w-full max-w-xs">
-          <FontAwesomeIcon size="2x" icon={faBars} color="#D22030"/>
+      {/* Header - Fixed size and position */}
+      <div className="flex-shrink-0 flex items-center border-b-2 border-black bg-[#f2f2f2] px-4 md:px-8 py-4 md:py-6 h-16 md:h-20">
+        <div className="w-8 md:w-12">
+          <FontAwesomeIcon icon={faBars} color="#D22030" className="text-xl md:text-3xl"/>
         </div>
-        <h1 className="text-lg md:text-4xl font-semibold ml-4 md:ml-16 text-[#d22030]">MatBot</h1>
+        <h1 className="text-xl md:text-4xl font-semibold ml-4 md:ml-16 text-[#d22030]">MatBot</h1>
       </div>
   
       {/* Chat container - Flexible height */}
@@ -384,7 +384,7 @@ const Home = () => {
         className="flex-1 overflow-y-auto px-4 pb-24"
       >
         {currentChatIndex !== null && chats[currentChatIndex] && chats[currentChatIndex].appendedResponses ? (
-          <div className="transition-all duration-300" style={{ marginTop }}>
+          <div className="transition-all duration-300 pt-4" style={{ marginTop }}>
             <div dangerouslySetInnerHTML={{ __html: chats[currentChatIndex].appendedResponses }} />
             {isLoading && (
               <div className="flex justify-center items-center mt-4">
