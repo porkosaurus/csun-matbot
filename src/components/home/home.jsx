@@ -336,7 +336,7 @@ const Home = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+<div className="min-h-screen flex flex-col overflow-hidden">
       <style>
         {`
           @keyframes fadeIn {
