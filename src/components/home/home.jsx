@@ -373,13 +373,14 @@ const Home = () => {
       </div>
   
       {/* Spacer to make room for the fixed header */}
+      {/* We add this spacer to ensure the chat content isn't blocked by the header */}
       <div className="h-16 md:h-20"></div>
   
       {/* Chat container - Flexible height and scrolling */}
       <div
         ref={chatContainerRef}
         className="flex-1 overflow-y-auto px-4 pb-24"
-        style={{ maxHeight: 'calc(100vh - 10rem)' }}  // Set a maximum height for the chat container
+        style={{ maxHeight: 'calc(100vh - 10rem)', paddingTop: '4rem' }}  // Add paddingTop to push down content
       >
         {currentChatIndex !== null && chats[currentChatIndex] && chats[currentChatIndex].appendedResponses ? (
           <div className="transition-all duration-300 pt-4" style={{ marginTop }}>
@@ -446,9 +447,7 @@ const Home = () => {
         </form>
       </div>
     </div>
-  );
-  
-  
+  );  
 };
 
 export default Home;
