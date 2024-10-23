@@ -137,32 +137,18 @@ const Home = () => {
     {
         title: "Course Recommendations",
         content: `
-            <h3>First Year Economics Major Schedule Example</h3>
-            <p>Monday/Wednesday:</p>
+            <p>Since you're a freshman with a passion for playing the guitar and movies but haven't declared a major yet, here are some course recommendations that might interest you:</p>
             <ul>
-                <li>MATH 103 Mathematical Methods for Business - 11:30am-12:45pm</li>
-                <li>POLS 155 American Political Institutions - 10:00am-11:15am</li>
+                <li><strong>MUS 105. Understanding Music</strong> - An overview of Western music traditions, exploring musical styles, structures, and their connection with other art forms. This course could enhance your understanding of music and how it relates to your guitar playing.</li>
+                <li><strong>MUS 107. Music Today</strong> - A survey of various music genres like rock, jazz, and pop, focusing on the impact of technology. This could be relevant to your interests in both music and film.</li>
+                <li><strong>CTVA 210. Television-Film Aesthetics</strong> - Analyzes the art of television and film, which could provide valuable insights into the cinematic elements you're passionate about.</li>
+                <li><strong>CTVA 215. Cult Film and Television</strong> - Explores "cult" films and TV, their unique aesthetics, and the role of audience reception. A great fit for your movie interests.</li>
             </ul>
-            <p>Tuesday/Thursday:</p>
-            <ul>
-                <li>ECON 160 Principles of Microeconomics - 11:30am-12:45pm</li>
-                <li>ANTH 151 Introduction to Biological Anthropology - 1:00pm-2:15pm</li>
-            </ul>
+            <p>These courses fulfill General Education requirements in the Arts (C1) area and align well with your interests in music and film.</p>
+            <p>You might also explore courses like <strong>PHIL 165. Ethics for the 21st Century</strong> or <strong>PHIL 180. Human Nature and the Meaning of Life</strong>, which provide philosophical perspectives and could broaden your intellectual horizons.</p>
+            <p>Feel free to adjust your selections based on your evolving interests as you continue your academic journey!</p>
 
-            <h3>Music and Film Interest Courses</h3>
-            <ul>
-                <li>MUS 105 Understanding Music - Overview of Western music traditions</li>
-                <li>MUS 107 Music Today - Survey of various music genres including rock, jazz, and pop</li>
-                <li>CTVA 210 Television-Film Aesthetics - Analysis of TV and film as communicative art forms</li>
-                <li>CTVA 215 Cult Film and Television - Study of cult films and TV shows</li>
-            </ul>
-
-            <h3>Additional Recommended Courses</h3>
-            <ul>
-                <li>PHIL 165 Ethics for the 21st Century</li>
-                <li>PHIL 180 Human Nature and the Meaning of Life</li>
-                <li>ENGL 113B Approaches to University Writing B</li>
-            </ul>`
+`
     }
 ];
 
@@ -207,7 +193,7 @@ const Home = () => {
 
     // Handle predefined responses
     if (submissionCount < predefinedResponses.length) {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 5500));
       
       const response = predefinedResponses[submissionCount];
       
