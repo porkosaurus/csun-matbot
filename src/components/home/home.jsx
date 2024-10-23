@@ -369,15 +369,15 @@ const Home = () => {
           }
         `}
       </style>
-
+  
       {/* Header - Fixed height */}
-      <div className="flex items-center border-b-2 border-black bg-[#f2f2f2] px-8 py-8">
+      <div className="flex items-center border-b-2 border-black bg-[#f2f2f2] px-4 md:px-8 py-4 md:py-8">
         <div className="w-full max-w-xs">
           <FontAwesomeIcon size="2x" icon={faBars} color="#D22030"/>
         </div>
         <h1 className="text-lg md:text-4xl font-semibold ml-4 md:ml-16 text-[#d22030]">MatBot</h1>
       </div>
-
+  
       {/* Chat container - Flexible height */}
       <div 
         ref={chatContainerRef}
@@ -398,17 +398,17 @@ const Home = () => {
             )}
           </div>
         ) : (
-          <div className="h-full flex flex-col justify-center items-center">
+          <div className="min-h-0 h-full flex flex-col justify-start md:justify-center items-center pt-8 md:pt-0">
             <img 
               src={matbot} 
               alt="MatBot Logo" 
-              className="w-48 h-48 md:w-64 md:h-64 object-contain"
+              className="w-32 h-32 md:w-64 md:h-64 object-contain mb-8"
             />
-            <div className="w-full flex flex-col items-center mt-8">
+            <div className="w-full flex flex-col items-center space-y-4 pb-20 md:pb-0">
               {suggestions.map((suggestion, index) => (
                 <div
                   key={suggestion}
-                  className="w-[65%] p-4 mb-4 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-all duration-300"
+                  className="w-[85%] md:w-[65%] p-3 md:p-4 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-all duration-300"
                   style={{
                     opacity: 0,
                     animation: `fadeIn 0.5s ease-out ${index * 0.2}s forwards`
@@ -418,19 +418,19 @@ const Home = () => {
                     setDisabled(false);
                   }}
                 >
-                  <p className="text-gray-600 text-center">{suggestion}</p>
+                  <p className="text-gray-600 text-center text-sm md:text-base">{suggestion}</p>
                 </div>
               ))}
             </div>
           </div>
         )}
       </div>
-
+  
       {/* Input container - Fixed at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 bg-white p-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-white p-4">
         <form onSubmit={handleSubmit} className="flex max-w-5xl mx-auto">
           <input
-            className="flex-1 bg-white pl-6 md:pl-4 rounded-full border-0 py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
+            className="flex-1 bg-white pl-4 rounded-full border-0 py-3 md:py-4 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 text-sm"
             type="text"
             value={inputValue}
             onChange={handleInputChange}
