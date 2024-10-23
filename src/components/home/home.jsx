@@ -170,12 +170,6 @@ const Home = () => {
     createNewChat();
   }, []);
 
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [chats, isLoading]);
-
   const createNewChat = () => {
     const newChat = {
       id: Date.now(),
@@ -373,7 +367,7 @@ const Home = () => {
       {/* Header - Fixed size and position */}
       <div className="fixed top-0 left-0 right-0 z-10 flex items-center border-b-2 border-black bg-[#f2f2f2] px-4 md:px-8 py-4 md:py-6 h-16 md:h-20">
         <div className="w-8 md:w-12">
-          <FontAwesomeIcon icon={faBars} color="#D22030" className="text-xl md:text-3xl"/>
+          <FontAwesomeIcon icon={faBars} color="#D22030" className="text-xl md:text-3xl" />
         </div>
         <h1 className="text-xl md:text-4xl font-semibold ml-4 md:ml-16 text-[#d22030]">MatBot</h1>
       </div>
@@ -382,27 +376,19 @@ const Home = () => {
       <div className="h-16 md:h-20"></div>
   
       {/* Chat container - Flexible height and scrolling */}
-      <div 
+      <div
         ref={chatContainerRef}
-        className="flex-1 overflow-y-auto px-4 pb-24 flex flex-col justify-start items-center" // Ensure flex column for vertical alignment
+        className="flex-1 overflow-y-auto px-4 pb-24"
+        style={{ maxHeight: 'calc(100vh - 10rem)' }}  // Set a maximum height for the chat container
       >
-        <div className="mt-4 mb-8"> {/* Add margin to push logo down */}
-          <img 
-            src={matbot} 
-            alt="MatBot Logo" 
-            className="w-32 h-32 md:w-64 md:h-64 object-contain"
-          />
-        </div>
-  
-        {/* Only show this section if currentChatIndex is valid */}
         {currentChatIndex !== null && chats[currentChatIndex] && chats[currentChatIndex].appendedResponses ? (
           <div className="transition-all duration-300 pt-4" style={{ marginTop }}>
             <div dangerouslySetInnerHTML={{ __html: chats[currentChatIndex].appendedResponses }} />
             {isLoading && (
               <div className="flex justify-center items-center mt-4">
-                <img 
-                  src={loading} 
-                  alt="Loading..." 
+                <img
+                  src={loading}
+                  alt="Loading..."
                   className="transform scale-30"
                   style={{ transform: 'scale(0.3)' }}
                 />
@@ -410,7 +396,12 @@ const Home = () => {
             )}
           </div>
         ) : (
-          <div className="min-h-0 h-full flex flex-col justify-start items-center pt-4">
+          <div className="min-h-0 h-full flex flex-col justify-start md:justify-center items-center pt-8 md:pt-0">
+            <img
+              src={matbot}
+              alt="MatBot Logo"
+              className="w-32 h-32 md:w-64 md:h-64 object-contain mb-8"
+            />
             <div className="w-full flex flex-col items-center space-y-4 pb-20 md:pb-0">
               {suggestions.map((suggestion, index) => (
                 <div
