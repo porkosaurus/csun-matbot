@@ -102,6 +102,22 @@ const Home = () => {
             </ul>`
     },
     {
+      title: "Course Recommendations",
+      content: `
+          <p>Since you're a freshman with a passion for playing the guitar and movies but haven't declared a major yet, here are some course recommendations that might interest you:</p>
+          <ul>
+              <li><strong>MUS 105. Understanding Music</strong> - An overview of Western music traditions, exploring musical styles, structures, and their connection with other art forms. This course could enhance your understanding of music and how it relates to your guitar playing.</li>
+              <li><strong>MUS 107. Music Today</strong> - A survey of various music genres like rock, jazz, and pop, focusing on the impact of technology. This could be relevant to your interests in both music and film.</li>
+              <li><strong>CTVA 210. Television-Film Aesthetics</strong> - Analyzes the art of television and film, which could provide valuable insights into the cinematic elements you're passionate about.</li>
+              <li><strong>CTVA 215. Cult Film and Television</strong> - Explores "cult" films and TV, their unique aesthetics, and the role of audience reception. A great fit for your movie interests.</li>
+          </ul>
+          <p>These courses fulfill General Education requirements in the Arts (C1) area and align well with your interests in music and film.</p>
+          <p>You might also explore courses like <strong>PHIL 165. Ethics for the 21st Century</strong> or <strong>PHIL 180. Human Nature and the Meaning of Life</strong>, which provide philosophical perspectives and could broaden your intellectual horizons.</p>
+          <p>Feel free to adjust your selections based on your evolving interests as you continue your academic journey!</p>
+
+`
+  },
+    {
         title: "Student Organizations",
         content: `
 <p>It's wonderful that you're passionate about climate change and LGBTQ+ rights! There are several student organizations on campus that might interest you.</p>
@@ -174,22 +190,6 @@ const Home = () => {
 
       `
     },
-    {
-        title: "Course Recommendations",
-        content: `
-            <p>Since you're a freshman with a passion for playing the guitar and movies but haven't declared a major yet, here are some course recommendations that might interest you:</p>
-            <ul>
-                <li><strong>MUS 105. Understanding Music</strong> - An overview of Western music traditions, exploring musical styles, structures, and their connection with other art forms. This course could enhance your understanding of music and how it relates to your guitar playing.</li>
-                <li><strong>MUS 107. Music Today</strong> - A survey of various music genres like rock, jazz, and pop, focusing on the impact of technology. This could be relevant to your interests in both music and film.</li>
-                <li><strong>CTVA 210. Television-Film Aesthetics</strong> - Analyzes the art of television and film, which could provide valuable insights into the cinematic elements you're passionate about.</li>
-                <li><strong>CTVA 215. Cult Film and Television</strong> - Explores "cult" films and TV, their unique aesthetics, and the role of audience reception. A great fit for your movie interests.</li>
-            </ul>
-            <p>These courses fulfill General Education requirements in the Arts (C1) area and align well with your interests in music and film.</p>
-            <p>You might also explore courses like <strong>PHIL 165. Ethics for the 21st Century</strong> or <strong>PHIL 180. Human Nature and the Meaning of Life</strong>, which provide philosophical perspectives and could broaden your intellectual horizons.</p>
-            <p>Feel free to adjust your selections based on your evolving interests as you continue your academic journey!</p>
-
-`
-    }
 ];
 
   useEffect(() => {
