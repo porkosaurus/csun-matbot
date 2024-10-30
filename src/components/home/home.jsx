@@ -102,7 +102,7 @@ const Home = () => {
             </ul>`
     },
     {
-        title: "Clubs",
+        title: "Student Organizations",
         content: `
 <p>It's wonderful that you're passionate about climate change and LGBTQ+ rights! There are several student organizations on campus that might interest you.</p>
 
@@ -131,6 +131,48 @@ const Home = () => {
     These are just a few clubs that align with your interests. I encourage you to explore their websites and reach out directly with any questions! Let me know if you'd like more recommendations.
 </p>
 `
+    },
+    {
+      title: "",
+      content: `
+      <p>Here's a list of upcoming basketball games for the California State University at Northridge (CSUN) men’s and women’s teams:</p>
+
+<h2>Men’s Basketball Upcoming Games</h2>
+
+<h3>Away Games:</h3>
+<ul>
+    <li><strong>St. Bonaventure:</strong> November 4th</li>
+    <li><strong>Le Moyne:</strong> November 6th</li>
+    <li><strong>Cal Poly:</strong> December 7th</li>
+    <li><strong>UC Irvine:</strong> February 20th</li>
+</ul>
+
+<h3>Home Games:</h3>
+<ul>
+    <li><strong>Nobel University:</strong> November 13th</li>
+    <li><strong>UC Riverside:</strong> December 5th</li>
+    <li><strong>UC Davis:</strong> January 4th</li>
+</ul>
+
+<h2>Women’s Basketball Upcoming Games</h2>
+
+<h3>Home Games:</h3>
+<ul>
+    <li><strong>La Sierra:</strong> November 4th</li>
+    <li><strong>California Baptist:</strong> December 11th</li>
+    <li><strong>UC Davis:</strong> February 22nd</li>
+</ul>
+
+<h3>Away Games:</h3>
+<ul>
+    <li><strong>Utah State:</strong> November 8th</li>
+    <li><strong>Fresno State:</strong> November 22nd</li>
+    <li><strong>UC Riverside:</strong> December 5th</li>
+</ul>
+
+<p>There are plenty of great games coming up! For the full schedule and ticket information, be sure to visit the <a href="https://www.gomatadors.com/">CSUN Athletics website</a>. Let me know if you need any further information!</p>
+
+      `
     },
     {
         title: "Course Recommendations",
