@@ -102,37 +102,20 @@ const Home = () => {
             </ul>`
     },
     {
-        title: "Gender-Inclusive Bathrooms",
+        title: "Clubs Demonstration",
         content: `
-            <h3>University Student Union Locations</h3>
-            <ul>
-                <li>Sol Center (2nd floor) - 2 restrooms</li>
-                <li>East Conference Center (1st and 2nd floors)</li>
-            </ul>
+    <p>That's wonderful that you're passionate about climate change and LGBTQ+ rights! There are a few really great student organizations on campus that I think you'd be interested in.</p>
 
-            <h3>Campus Building Locations</h3>
-            <ul>
-                <li>Arbor Court (1st floor)</li>
-                <li>Brown Center (1st floor)</li>
-                <li>Chaparral Hall (2nd floor)</li>
-                <li>Cypress Hall (1st and 2nd floors)</li>
-                <li>Education Building (2nd floor)</li>
-                <li>Eucalyptus Hall (basement)</li>
-                <li>Extended University Commons (1st, 2nd, and 3rd floors)</li>
-                <li>Intercollegiate Athletics Office (1st floor)</li>
-                <li>Laurel Hall (1st floor)</li>
-                <li>Maple Hall (1st, 2nd, and 3rd floors)</li>
-                <li>Monterey Hall (1st, 2nd, and 3rd floors)</li>
-                <li>Oasis Wellness Center (basement)</li>
-                <li>University Library (1st floor)</li>
-                <li>Santa Susana Hall (1st floor)</li>
-                <li>Sierra Hall (1st floor)</li>
-                <li>Sierra Tower (8th floor)</li>
-                <li>Student Health Center (2nd floor)</li>
-                <li>Sustainability Center/AS Recycling (1st floor)</li>
-                <li>The Soraya (1st floor)</li>
-            </ul>
-            <p>For more information, contact the LGBTQ Advisory Board at lgbtqadvisory@csun.edu</p>`
+    <h2>Climate Action</h2>
+    <p>First, there's CSUN Act Now - they're a collaboration of students, faculty, and staff working to get the CSUN community involved in a variety of contemporary issues, including climate change. They put on interactive events, lectures, and other activities to help educate people and get them engaged in making meaningful change. You can find them online at <a href="csun.campuslabs.com/engage/organization/can">csun.campuslabs.com/engage/organization/can</a>.</p>
+
+    <h2>LGBTQ+ Advocacy</h2>
+    <p>There's also the Queer Coalition of Social Workers, which focuses on LGBTQ+ advocacy and issues. They host discussions, movie screenings, and other events to raise awareness and support the LGBTQ+ community on campus. You can reach out to them at <a href="mailto:qcswcsun@gmail.com">qcswcsun@gmail.com</a>.</p>
+
+    <h2>Environmental Sustainability</h2>
+    <p>Another club that might interest you is Sustainable Fashion - they're all about raising awareness of fast fashion's environmental impact and promoting more sustainable clothing options. They do things like thrift exchanges, documentary screenings, and lectures on the history of the fashion industry. You can find them at <a href="csun.campuslabs.com/engage/organization/csunsusfashionclub">csun.campuslabs.com/engage/organization/csunsusfashionclub</a>.</p>
+
+    <p>Those are just a few of the great clubs I'd recommend based on your interests. I'd encourage you to check out their websites and social media to learn more, and feel free to reach out to them directly if you have any other questions! I'm always happy to provide more suggestions if you need them.</p>`
     },
     {
         title: "Course Recommendations",
