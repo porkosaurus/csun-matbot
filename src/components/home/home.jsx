@@ -4,6 +4,7 @@ import { faArrowPointer, faBars, faPenToSquare } from '@fortawesome/free-solid-s
 import matbot from '../../images/matbot-logo.png';
 import loading from '../../images/writing-loading.gif';
 
+
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
   const [chats, setChats] = useState([]);
@@ -231,75 +232,56 @@ const Home = () => {
     setInputValue('');
     setDisabled(true);
 
-    // Handle predefined responses
-    if (submissionCount < predefinedResponses.length) {
-      await new Promise(resolve => setTimeout(resolve, 5500));
-      
-      const response = predefinedResponses[submissionCount];
-      
-      const newResponse = `
-        <div class="response-container">
-          <p class="chat-bubble chat-bubble-question mb-4 text-sm md:text-lg rounded-full text-white border-black">${submittedQuestion}</p>
-          <div class="chat-bubble chat-bubble-answer text-sm md:text-lg">
-            <h2 class="font-bold mb-4">${response.title}</h2>
-            ${response.content}
-          </div>
-        </div>
-      `;
-
-      const updatedChat = {
-        ...chats[currentChatIndex],
-        question: '',
-        answer: response.content,
-        appendedResponses: (chats[currentChatIndex].appendedResponses || '') + newResponse,
-      };
-
-      const updatedChats = [...chats];
-      updatedChats[currentChatIndex] = updatedChat;
-      setChats(updatedChats);
-      setSubmissionCount(prevCount => prevCount + 1);
-    } else {
-      try {
-        const response = await fetch('https://chatbot-server-419523.wl.r.appspot.com/chatbot', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            question: submittedQuestion,
-            context: chats[currentChatIndex].context,
-            model: 'model2',
-          }),
+    try {
+        // Make a POST request to the Flask API
+        const response = await fetch('http://130.166.1.214:5000/chatbot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                question: submittedQuestion,
+                context: chats[currentChatIndex]?.context || '',
+                model: 'model2',
+            }),
         });
 
         if (response.ok) {
-          const data = await response.json();
-          // Handle API response similarly to predefined responses
-          const newResponse = `
-            <div class="response-container">
-              <p class="chat-bubble chat-bubble-question mb-4 text-sm md:text-lg rounded-full text-white border-black">${submittedQuestion}</p>
-              <div class="chat-bubble chat-bubble-answer text-sm md:text-lg">${data.answer}</div>
-            </div>
-          `;
+            const data = await response.json();
 
-          const updatedChat = {
-            ...chats[currentChatIndex],
-            question: '',
-            answer: data.answer,
-            appendedResponses: (chats[currentChatIndex].appendedResponses || '') + newResponse,
-          };
+            // Construct the response HTML
+            const newResponse = `
+                <div class="response-container">
+                  <p class="chat-bubble chat-bubble-question mb-4 text-sm md:text-lg rounded-full text-white border-black">
+                    ${submittedQuestion}
+                  </p>
+                  <div class="chat-bubble chat-bubble-answer text-sm md:text-lg">
+                    ${data.formatted_answer}
+                  </div>
+                </div>
+            `;
 
-          const updatedChats = [...chats];
-          updatedChats[currentChatIndex] = updatedChat;
-          setChats(updatedChats);
+            // Update the current chat with the new response
+            const updatedChat = {
+                ...chats[currentChatIndex],
+                question: '',
+                answer: data.formatted_answer,
+                appendedResponses: (chats[currentChatIndex].appendedResponses || '') + newResponse,
+            };
+
+            const updatedChats = [...chats];
+            updatedChats[currentChatIndex] = updatedChat;
+            setChats(updatedChats);
+        } else {
+            console.error('Failed to fetch response from the server');
         }
-      } catch (error) {
+    } catch (error) {
         console.error('Error:', error);
-      }
+    } finally {
+        setIsLoading(false);
     }
-    
-    setIsLoading(false);
-  };
+};
+
 
   const handleInputChange = (e) => {
     const value = e.target.value;
