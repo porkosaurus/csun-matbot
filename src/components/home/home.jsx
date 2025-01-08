@@ -234,7 +234,7 @@ const Home = () => {
 
     try {
         // Make a POST request to the Flask API
-        const response = await fetch('https://130.166.1.214:5000/chatbot', {
+        const response = await fetch('https://ff17-130-166-1-214.ngrok-free.app/chatbot', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
