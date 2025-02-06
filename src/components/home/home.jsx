@@ -169,6 +169,7 @@ const Home = () => {
 
     recognition.start();
   };
+  // End Voice Input Functionality
 
   const renderChatContent = () => {
     if (currentChatIndex !== null && chats[currentChatIndex] && chats[currentChatIndex].appendedResponses) {
