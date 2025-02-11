@@ -113,13 +113,6 @@ const Home = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-    setDisabled(value.trim() === '');
-  };
-
-  // New: Voice Input Functionality
   const handleVoiceInput = () => {
     // Check if the browser supports the Speech Recognition API
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -131,44 +124,29 @@ const Home = () => {
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.lang = 'en-US';
-
+  
     recognition.onstart = () => {
       console.log("Voice recognition started. Please speak...");
     };
-
+  
     recognition.onerror = (event) => {
       console.error("Speech recognition error:", event.error);
     };
-
+  
     recognition.onresult = async (event) => {
       const transcript = event.results[0][0].transcript;
       console.log("Recognized transcript:", transcript);
       // Set the recognized text into the input field and enable submission
       setInputValue(transcript);
       setDisabled(transcript.trim() === '');
-
-      // For this demo, we immediately send the transcript to a dummy server link.
-      // (Replace the URL with your actual endpoint later.)
-      try {
-        const response = await fetch('https://dummy-endpoint.com/voice', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ voiceInput: transcript }),
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Response from voice endpoint:", data);
-          // Optionally, you could process data here or even auto-submit the chat.
-        } else {
-          console.error("Failed to send voice input");
-        }
-      } catch (error) {
-        console.error("Error sending voice input:", error);
-      }
+      
+      // Optionally, you can automatically submit the transcript or process it further here.
+      // For example:
+      // handleSubmit(new Event('submit'));
     };
-
+  
     recognition.start();
-  };
+  };  
   // End Voice Input Functionality
 
   const renderChatContent = () => {
