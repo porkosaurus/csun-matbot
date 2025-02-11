@@ -113,6 +113,13 @@ const Home = () => {
     }
   };
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    setDisabled(value.trim() === '');
+  };
+  
+
   const handleVoiceInput = () => {
     // Check if the browser supports the Speech Recognition API
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -148,6 +155,8 @@ const Home = () => {
     recognition.start();
   };  
   // End Voice Input Functionality
+
+
 
   const renderChatContent = () => {
     if (currentChatIndex !== null && chats[currentChatIndex] && chats[currentChatIndex].appendedResponses) {
